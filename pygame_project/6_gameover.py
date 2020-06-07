@@ -2,8 +2,8 @@
 # 2. 캐릭터가 공애 맞음 (실패)
 # 3. 99초 시간 제한 초과 (실패)
 
-import pygame
 import os
+import pygame
 ################################################################################################
 # 기본 초기화 (필수)
 pygame.init() # 반드시 초기화
@@ -62,8 +62,7 @@ ball_images = [
     pygame.image.load(os.path.join(image_path, "balloon1.png")),
     pygame.image.load(os.path.join(image_path, "balloon2.png")),
     pygame.image.load(os.path.join(image_path, "balloon3.png")),
-    pygame.image.load(os.path.join(image_path, "balloon4.png")),
-]
+    pygame.image.load(os.path.join(image_path, "balloon4.png"))]
 
 # 공 크기에 따른 최초 스피드
 ball_speed_y = [-18, -15, -12, -9] # index 0, 1, 2, 3 에 해당하는 값
@@ -73,13 +72,13 @@ balls = []
 
 # 최초 발생하는 큰 공 추가
 balls.append({
-    "pos_x": 50, # 공의 x 좌표
-    "pos_y": 50, # 공의 y 좌표
+    "pos_x" : 50, # 공의 x 좌표
+    "pos_y" : 50, # 공의 y 좌표
     "img_idx" : 0, # 공의 이미지 인덱스
     "to_x": 3, # x축 이동방향, -3 왼쪽, 3 오른쪽
     "to_y": -6, # y축 이동방향
-    "init_spd_y": ball_speed_y[0] # y 최초 속도
-})
+    "init_spd_y": ball_speed_y[0]})# y 최초 속도
+
 
 # 사라질 무기, 공 저장 변수
 weapon_to_remove = -1
@@ -94,7 +93,7 @@ start_ticks = pygame.time.get_ticks() # 시작 시간 정의
 game_result = "Game Over"
 
 # 이벤트 루프
-running = True # 게임이 돌고 있다
+running = True
 while running:
     dt = clock.tick(30) 
 
@@ -108,7 +107,7 @@ while running:
                 character_to_x -= character_speed
             elif event.key == pygame.K_RIGHT: # 캐릭터를 오른쪽으로 
                 character_to_x += character_speed    
-            elif event.key == pygame.K_SPACE: # 무기발사
+            elif event.key == pygame.K_SPACE: # 무기 발사
                 weapon_x_pos = character_x_pos + (character_width / 2) - (weapon_width / 2)
                 weapon_y_pos = character_y_pos
                 weapons.append([weapon_x_pos, weapon_y_pos])
@@ -122,8 +121,8 @@ while running:
 
     if character_x_pos < 0:
         character_x_pos = 0
-    elif character_x_pos > screen_width:
-        character_x_pos = screen_width
+    elif character_x_pos > screen_width - character_width:
+        character_x_pos = screen_width - character_width
 
     # 무기 위치 조정
     # 100, 200 -> 180, 160, 140, ...
@@ -197,7 +196,7 @@ while running:
                 # 가장 작은 크기의 공이 아니라면 다음 단계의 공으로 나눠주기
                 if ball_img_idx < 3:
                     # 현재 공 크기 정보를 가지고 옴
-                    ball_widht = ball_rect.size[0]
+                    ball_width = ball_rect.size[0]
                     ball_height = ball_rect.size[1]
 
                     # 나눠진 공 정보
@@ -207,24 +206,36 @@ while running:
 
                     # 왼쪽으로 튕겨나가는 작은 공
                     balls.append({
-                        "pos_x": ball_pos_x + (ball_width / 2 ) - (small_ball_width / 2), # 공의 x 좌표
-                        "pos_y": ball_pos_y + (ball_height / 2) - (small_ball_height / 2), # 공의 y 좌표
+                        "pos_x" : ball_pos_x + (ball_width / 2) - (small_ball_width / 2), # 공의 x 좌표
+                        "pos_y" : ball_pos_y + (ball_height / 2) - (small_ball_height / 2), # 공의 y 좌표
                         "img_idx" : ball_img_idx + 1, # 공의 이미지 인덱스
                         "to_x": -3, # x축 이동방향, -3 왼쪽, 3 오른쪽
-                        "to_y": -6, # y축 이동방향
-                        "init_spd_y": ball_speed_y[ball_img_idx + 1] # y 최초 속도
-                    })
+                        "to_y": -6, # y축 이동방향,
+                        "init_spd_y": ball_speed_y[ball_img_idx + 1]})# y 최초 속도
                     
                     # 오른쪽으로 튕겨나가는 작은 공
                     balls.append({
-                        "pos_x": ball_pos_x + (ball_width / 2 ) - (small_ball_width / 2), # 공의 x 좌표
-                        "pos_y": ball_pos_y + (ball_height / 2) - (small_ball_height / 2), # 공의 y 좌표
+                        "pos_x" : ball_pos_x + (ball_width / 2) - (small_ball_width / 2), # 공의 x 좌표
+                        "pos_y" : ball_pos_y + (ball_height / 2) - (small_ball_height / 2), # 공의 y 좌표
                         "img_idx" : ball_img_idx + 1, # 공의 이미지 인덱스
-                        "to_x": +3, # x축 이동방향, -3 왼쪽, 3 오른쪽
-                        "to_y": -6, # y축 이동방향
-                        "init_spd_y": ball_speed_y[ball_img_idx + 1] # y 최초 속도
-                    })
+                        "to_x": 3, # x축 이동방향, -3 왼쪽, 3 오른쪽
+                        "to_y": -6, # y축 이동방향,
+                        "init_spd_y": ball_speed_y[ball_img_idx + 1]})# y 최초 속도
+                        
                 break
+        else: # 계속 게임을 진행
+            continue # 안쪽 for문 조건이 맞지 않으면 continue. 바깥 for 문 계속 수행
+        break # 안쪽 for문에서 break를 만나면 여기로 진입 가능, 이중 for문을 한번에 탈출
+
+    # for outerCondition:
+    #     outerAction
+    #     for innerCondition:
+    #         innerAction
+    #         if collision:
+    #             break
+    #     else: 
+    #         continue
+    #     break
 
     # 충돌된 공 or 무기 없애기
     if ball_to_remove > -1:
@@ -269,7 +280,7 @@ while running:
 
 # 게임 오버 메시지
 msg = game_font.render(game_result, True, (255, 255, 0))
-msg_rect = msg.get_rect(center = (int(screen_width / 2), int(screen_height / 2)))
+msg_rect = msg.get_rect(center=(int(screen_width / 2), int(screen_height / 2)))
 screen.blit(msg, msg_rect)
 pygame.display.update()
 
